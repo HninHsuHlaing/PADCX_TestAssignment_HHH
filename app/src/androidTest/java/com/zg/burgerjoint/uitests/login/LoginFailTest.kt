@@ -1,27 +1,28 @@
 package com.zg.burgerjoint.uitests.login
+
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.rule.ActivityTestRule
 import com.zg.burgerjoint.R
 import com.zg.burgerjoint.activities.LoginActivity
+//import com.zg.burgerjoint.utils.EM_LOGIN_FAIL_ERROR_MESSAGE
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 @LargeTest
-open class LoginSuccessTest {
+open class LoginFailTest {
 
     private val activityTestRule = ActivityTestRule<LoginActivity>(LoginActivity::class.java)
 
     @Before
-    open fun setUp(){
+    open fun setUp() {
         activityTestRule.launchActivity(Intent())
     }
 
@@ -31,23 +32,19 @@ open class LoginSuccessTest {
     }
 
     @Test
-    fun enterInformation_navigateToMainScreen(){
+    fun enterInformation_navigateToMainScreen() {
         onView(withId(R.id.etUserName)).perform(
-            typeText(TEST_USER_NAME),
+            typeText(""),
             closeSoftKeyboard()
         )
         onView(withId(R.id.etPassword)).perform(
-            typeText(TEST_PASSWORD),
+            typeText(""),
             closeSoftKeyboard()
         )
         onView(withId(R.id.btnLogin)).perform(click())
         Thread.sleep(400)
-        onView((withId(R.id.rvBurgerList))).check(matches(isDisplayed()))
-    }
-
-    companion object {
-        const val TEST_USER_NAME = "Hnin Hsu Hlaing"
-        const val TEST_PASSWORD = "123456"
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+            .check(matches(withText("\"Username and Password should not be empty\"")))
     }
 }
 

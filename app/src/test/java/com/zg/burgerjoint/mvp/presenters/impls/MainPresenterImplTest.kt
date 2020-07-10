@@ -122,6 +122,13 @@ class MainPresenterImplTest {
 
 
 
+
+
+
+
+
+
+
     companion object {
 
         fun getMockLifeCycleOwner() : LifecycleOwner{
